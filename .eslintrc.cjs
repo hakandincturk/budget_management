@@ -108,12 +108,6 @@ module.exports = {
 		'no-lonely-if': [
 			'error'
 		],
-		'new-cap': [
-			'error',
-			{
-				'newIsCap': true
-			}
-		],
 		'no-plusplus': [
 			'error'
 		],

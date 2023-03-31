@@ -1,4 +1,9 @@
 import { DataSource } from 'typeorm';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 type Config = Record<string, DataSource>;
 
@@ -12,9 +17,9 @@ const devSource: DataSource = new DataSource  ({
 	database: 'budget_management_dev',
 	synchronize: true,
 	logging: true,
-	entities: [ '../models/entities/*.ts' ],
-	migrations: [ '../migrations/*.ts' ],
-	subscribers: [ '../subscribers/*.ts' ]
+	entities: [ `${__dirname}/../models/entities/*.ts` ],
+	migrations: [ '../models/migrations/*.ts' ],
+	subscribers: [ '../models/subscribers/*.ts' ]
 });
 
 const developmentSource: DataSource = new DataSource ({
@@ -27,9 +32,9 @@ const developmentSource: DataSource = new DataSource ({
 	database: 'budget_management_development',
 	synchronize: true,
 	logging: true,
-	entities: [ '../dist/entity/**/*.ts' ],
-	migrations: [ '../dist/migration/**/*.ts' ],
-	subscribers: [ '../dist/subscriber/**/*.ts' ]
+	entities: [ '../models/entity/**/*.ts' ],
+	migrations: [ '../models/migration/**/*.ts' ],
+	subscribers: [ '../models/subscriber/**/*.ts' ]
 });
 
 const config: Config = {
