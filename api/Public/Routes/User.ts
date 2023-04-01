@@ -1,12 +1,9 @@
 import {Router} from 'express';
-import UsertController from '../Controllers/User.js';
-/*
- * import UserController from '../Controllers/User';
- * import checkAuth from '../Middlewares/checkAuth';
- */
+import UserController from '../Controllers/User.js';
 
 const router = Router();
 
-router.route('/').get(UsertController.all);
+router.route('/').get(UserController.all);
+router.route('/').post(UserController.create);
 
 export default router;

@@ -21,7 +21,9 @@ export default {
 	// Base directory which we use to locate your JSDOC files
 	baseDir: __dirname,
 	// Glob pattern to find your jsdoc files (multiple patterns can be added in an array)
-	filesPattern: './**/*.ts',
+	filesPattern: [
+		'../../Public/Controllers/*.ts'
+	],
 	// URL where SwaggerUI will be rendered
 	swaggerUIPath: '/api-docs',
 	// Expose OpenAPI UI
