@@ -17,7 +17,8 @@ class General {
 					error: err.message,
 					stack: err.stack
 				};
-				if (response && !response.headersSent && !response.finished) {
+				
+				if (response && !response.headersSent) {
 					return response.status(500).json(response_body);
 				}
 			});

@@ -27,6 +27,7 @@ console.log(`this is the environment: ${nodeEnv}`);
 let requestResponse: Response = response;
 app.use((req: Request, res: Response, next: NextFunction) => {
 	requestResponse = res;
+	
 	next();
 });
 
