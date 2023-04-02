@@ -20,6 +20,12 @@ dotEnv.config();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(pagination);
+app.use((req: Request, res: Response, next: NextFunction) => {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+	next();
+});
 
 const nodeEnv = process.env.NODE_ENV || 'dev';
 console.log(`this is the environment: ${nodeEnv}`);
@@ -28,6 +34,11 @@ let requestResponse: Response = response;
 app.use((req: Request, res: Response, next: NextFunction) => {
 	requestResponse = res;
 	GeneralHelper.errorHandler(nodeEnv, requestResponse);
+	next();
+});
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+	req.headers.language = req.headers.language || 'tr';
 	next();
 });
 

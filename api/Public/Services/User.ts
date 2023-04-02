@@ -3,21 +3,25 @@ import md5 from 'md5';
 import {Users} from '../../src/models/entities/Users.js';
 import { dataSource } from '../../app.js';
 
+import { Lang } from '../../src/config/enums.js';
+
 class User {
 	
-	static async all(){
+	static async all(language: string){
 		try {
 			const usersRepository = dataSource.getRepository(Users);
 			const allUsers = await usersRepository.find();
+
+			console.log(Lang['tr'].Users.info.get);
 			
-			return { type: true, message: 'All Users', data: allUsers };
+			return { type: true, message: Lang[`${language}`].Users.info.get, data: allUsers };
 		}
 		catch (error) {
 			throw error;
 		}
 	}
 
-	static async create(user: Users){
+	static async create(user: Users, language: string){
 		try {
 
 			console.log('user --> ', user);

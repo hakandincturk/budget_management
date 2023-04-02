@@ -21,6 +21,9 @@ export class Users {
 	@Column({nullable: true}) 
 		phone_number: string;
 
+	@Column('boolean', {nullable: false, default: false}) 
+		is_removed: boolean;
+
 	@CreateDateColumn({default: new Date()}) 
 		createdAt: Date;
 

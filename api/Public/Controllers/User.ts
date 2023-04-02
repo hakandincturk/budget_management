@@ -21,7 +21,8 @@ class User{
 	 */
 	static async all(req: Request, res: Response){
 		try {
-			const result = await UserService.all();
+			const language = req.headers.language?.toString() || 'tr';
+			const result = await UserService.all(language);
 			return res.json({ type: true, message: result.message, data: result.data });
 		}
 		catch (error) {
@@ -39,7 +40,8 @@ class User{
 	 */
 	static async create(req: Request, res: Response){
 		try {
-			const result = await UserService.create(req.body);
+			const language = req.headers.language?.toString() || 'tr';
+			const result = await UserService.create(req.body, language);
 			return res.json({ type: true, message: result.message, data: result.data });
 		}
 		catch (error) {
