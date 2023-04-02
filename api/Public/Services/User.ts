@@ -19,7 +19,14 @@ class User {
 
 	static async create(user: Users){
 		try {
+
+			console.log('user --> ', user);
+
 			const usersRepository = dataSource.getRepository(Users);
+			const isUserExist = await usersRepository.findOne({ where: { email: user.email } });
+			if (isUserExist) {
+				return { type: false, message: 'User already exist' };
+			}	
 			const passwordSalt: string = process.env.PASSWORD_SALT || '';
 			user.password = md5(md5(user.password) + md5(passwordSalt));
 			const newUser = await usersRepository.save(user);

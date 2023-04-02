@@ -3,17 +3,19 @@ import UserService from '../Services/User.js';
 class User{
 
 	/**
-	 * A song type
-	 * @typedef {object} Song
-	 * @property {string} title.required - The title
-	 * @property {string} artist - The artist
-	 * @property {number} year - The year - double
+	 * User model
+	 * @typedef {object} CreateUserRequest
+	 * @property {string} name - The name
+	 * @property {string} surname - The surname
+	 * @property {string} email - The email
+	 * @property {string} password - The password
+	 * @property {string} phone_number - The phone number
 	 */
 
 	/**
 	 * GET /user/
 	 * @tags Users
-	 * @summary summary
+	 * @summary get all user list
 	 * @returns { object } 200 - Success message
 	 * @returns { Error } default - Unexpected error
 	 */
@@ -27,6 +29,14 @@ class User{
 		}
 	}
 
+	/**
+	 * POST /user/
+	 * @tags Users
+	 * @summary create a new user
+	 * @param { CreateUserRequest } request.body.required - User model
+	 * @returns { object } 200 - Success message
+	 * @returns { Error } default - Unexpected error
+	 */
 	static async create(req: Request, res: Response){
 		try {
 			const result = await UserService.create(req.body);

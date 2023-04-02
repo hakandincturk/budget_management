@@ -27,11 +27,9 @@ console.log(`this is the environment: ${nodeEnv}`);
 let requestResponse: Response = response;
 app.use((req: Request, res: Response, next: NextFunction) => {
 	requestResponse = res;
-	
+	GeneralHelper.errorHandler(nodeEnv, requestResponse);
 	next();
 });
-
-GeneralHelper.errorHandler(nodeEnv, requestResponse);
 
 const AppDataSource = dbConfig[nodeEnv];
 const dataSource = await AppDataSource.initialize();
