@@ -12,9 +12,7 @@ class User {
 			const usersRepository = dataSource.getRepository(Users);
 			const allUsers = await usersRepository.find();
 
-			console.log(Lang['tr'].Users.info.get);
-			
-			return { type: true, message: Lang[`${language}`].Users.info.get, data: allUsers };
+			return { type: true, message: Lang[language].Users.info.get, data: allUsers };
 		}
 		catch (error) {
 			throw error;
@@ -23,9 +21,6 @@ class User {
 
 	static async create(user: Users, language: string){
 		try {
-
-			console.log('user --> ', user);
-
 			const usersRepository = dataSource.getRepository(Users);
 			const isUserExist = await usersRepository.findOne({ where: { email: user.email } });
 			if (isUserExist) {
@@ -35,7 +30,7 @@ class User {
 			user.password = md5(md5(user.password) + md5(passwordSalt));
 			const newUser = await usersRepository.save(user);
 			
-			return { type: true, message: 'User created', data: newUser };
+			return { type: true, message: Lang[language].Users.success.create, data: newUser };
 		}
 		catch (error) {
 			throw error;
