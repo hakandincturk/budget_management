@@ -10,8 +10,8 @@ export class RolePermissions {
 	@PrimaryGeneratedColumn()
 		id: number;
 
-	@Column()
-		isActive: boolean;
+	@Column({name: 'is_removed'})
+		is_removed: boolean;
 
 	@ManyToOne(() => Roles, role => role.rolePermissions)
 		role: Roles;

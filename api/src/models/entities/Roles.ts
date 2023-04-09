@@ -8,8 +8,12 @@ export class Roles {
 
 	@PrimaryGeneratedColumn()
 		id: number;
+
 	@Column()
 		name: string;
+
+	@Column({name: 'is_removed'})
+		is_removed: boolean;
 
 	@OneToMany(() => RolePermissions, userGroup => userGroup.role)
 		rolePermissions: RolePermissions[];

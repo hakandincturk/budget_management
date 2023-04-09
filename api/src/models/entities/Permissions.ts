@@ -11,6 +11,9 @@ export class Permissions {
 
 	@Column()
 		name: string;
+	
+	@Column({name: 'is_removed'})
+		is_removed: boolean;
 
 	@OneToMany(() => RolePermissions, rolePermissions => rolePermissions.permission)
 		rolePermissions: RolePermissions[];
