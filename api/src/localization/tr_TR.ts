@@ -6,6 +6,14 @@ export default {
 		dataNotFound: 'Veri bulunamadı.',
 		unauthorized: 'Bu işlemi yapmak için yetkiniz yok.'
 	},
+	Auth: {
+		success: {
+			login: 'Başarıyla giriş yapıldı'
+		},
+		error: {
+			wrongEmail: 'Hatalı email veya şifre'
+		}
+	},
 	Users: {
 		success: {
 			create: 'Kullanıcı başarıyla oluşturuldu.',

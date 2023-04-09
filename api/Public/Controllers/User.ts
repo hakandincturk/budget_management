@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 import UserService from '../Services/User.js';
 
-import { LanguageIndex } from '../../src/config/enums.js';
-
 class User{
 
 	/**
@@ -19,8 +17,7 @@ class User{
 	 * GET /user/
 	 * @tags Users
 	 * @summary get all user list
-	 * @returns { object } 200 - Success message
-	 * @returns { Error } default - Unexpected error
+	 * @return { Array<CreateUserRequest> } 200 - Success message
 	 */
 	static async all(req: Request, res: Response){
 		try {
@@ -38,8 +35,7 @@ class User{
 	 * @tags Users
 	 * @summary create a new user
 	 * @param { CreateUserRequest } request.body.required - User model
-	 * @returns { object } 200 - Success message
-	 * @returns { Error } default - Unexpected error
+	 * @return { Array<CreateUserRequest> } 200 - Success message
 	 */
 	static async create(req: Request, res: Response){
 		try {

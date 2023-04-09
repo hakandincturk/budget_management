@@ -18,7 +18,7 @@ const devSource: DataSource = new DataSource  ({
 	synchronize: true,
 	logging: false,
 	entities: [ `${__dirname}/../models/entities/*.ts` ],
-	migrations: [ '../models/migrations/*.ts' ],
+	migrations: [ `${__dirname}/../models/migrations/*.ts` ],
 	subscribers: [ '../models/subscribers/*.ts' ]
 });
 

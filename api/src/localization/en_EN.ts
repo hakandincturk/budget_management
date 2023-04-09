@@ -6,6 +6,14 @@ export default {
 		dataNotFound: 'Data not found.',
 		unauthorized: 'You are not authorized to perform this action.'
 	},
+	Auth: {
+		success: {
+			login: 'Successfully logged in'
+		},
+		error: {
+			wrongEmail: 'Incorrect email or password'
+		}
+	},
 	Users: {
 		success: {
 			create: 'User created successfully.',

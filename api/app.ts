@@ -4,7 +4,7 @@ import dotEnv from 'dotenv';
 import express, { Application, NextFunction, Request, Response, response } from 'express';
 import { pagination } from 'typeorm-pagination';
 
-import GeneralHelper from './helpers/General.js';
+import {errorHandler, loggerMiddleware} from './helpers/General.js';
 
 import expressJSDOCSwagger from 'express-jsdoc-swagger';
 
@@ -33,7 +33,7 @@ console.log(`this is the environment: ${nodeEnv}`);
 let requestResponse: Response = response;
 app.use((req: Request, res: Response, next: NextFunction) => {
 	requestResponse = res;
-	GeneralHelper.errorHandler(nodeEnv, requestResponse);
+	errorHandler(nodeEnv, requestResponse);
 	next();
 });
 
@@ -48,7 +48,7 @@ console.log(`postgres connected to ${dataSource.options.database}`);
 
 expressJSDOCSwagger(app)(swaggerOptions);
 
-app.use(GeneralHelper.loggerMiddleware);
+app.use(loggerMiddleware);
 app.use('/', publicRoutes);
 
 app.get('/health', (req: Request, res: Response) => {
