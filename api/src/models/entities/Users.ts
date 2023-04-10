@@ -32,7 +32,7 @@ export class Users {
 	@CreateDateColumn({default: new Date()})
 		updatedAt: Date;
 
-	@OneToMany(() => UserRoles, userRoles => userRoles.role, {cascade: true})
+	@OneToMany(() => UserRoles, userRoles => userRoles.user, {cascade: true})
 		userRoles: UserRoles[];
 
 }
