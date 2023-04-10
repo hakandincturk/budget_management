@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
 import md5 from 'md5';
 
 export const loggerMiddleware = (request: Request, response: Response, next: NextFunction) => {
@@ -34,4 +35,30 @@ export const generateUUID = () => {
 export const encryptPassword = (password: string) => {
 	const passwordSalt: string = process.env.PASSWORD_SALT || '';
 	return md5(md5(password) + md5(passwordSalt));
+};
+
+export const checkToken = () => {
+	return async (req: Request, res: Response, next: NextFunction) => {
+		try {
+			if (!req.headers['access-token'] ?? req.cookies['access-token']) {
+				return res.status(401).json({type: false, message: 'Token not found'});
+			}
+			const token = req.headers['access-token'] ?? req.cookies['access-token'];
+			if (!token) {
+				return res.status(401).json({type: false, message: 'Token not found'});
+			}
+	
+			jwt.verify(token, process.env.TOKEN_SECRET || '', async (err: any, decoded: any) =>{
+				if (err) {
+					return res.status(401).json({type: false, message: 'Token not found'});
+				}
+				else {
+					next();
+				}
+			});
+		}
+		catch (error) {
+			return res.json({type: false, message: error.message});
+		}
+	};
 };

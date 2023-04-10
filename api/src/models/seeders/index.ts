@@ -15,13 +15,11 @@ const truncateQueue = [
 ];
 
 const seedQueue = [
-	'Users'
-	/*
-	 * 'Roles',
-	 * 'Permissions',
-	 * 'RolePermissions',
-	 * 'UserRoles'
-	 */
+	'Users',
+	'Roles',
+	'Permissions',
+	'RolePermissions',
+	'UserRoles'
 ];
 
 const runSeeder = async () => {
@@ -32,7 +30,7 @@ const runSeeder = async () => {
 	}
 
 	for (const table of seedQueue) {
-		console.log(table);
+		console.log(' -- ', table);
 		import(`${__dirname}/${table}.js`).then(module => {
 			seeder(`${table}`, module.default);
 		});

@@ -12,6 +12,8 @@ import dbConfig from './src/config/dbConfig.js';
 import swaggerOptions  from './src/config/swaggerOptions.js';
 
 import publicRoutes from './Public/index.js';
+import privateRoutes from './Private/index.js';
+import adminRoutes from './Admin/index.js';
 
 const PORT: number = Number(process.env.PORT) || 7000;
 const app: Application = express();
@@ -49,7 +51,10 @@ console.log(`postgres connected to ${dataSource.options.database}`);
 expressJSDOCSwagger(app)(swaggerOptions);
 
 app.use(loggerMiddleware);
+
 app.use('/', publicRoutes);
+app.use('/private', privateRoutes);
+app.use('/admin', adminRoutes);
 
 app.get('/health', (req: Request, res: Response) => {
 	return res.json({type: true, message: 'Deployment is running'});
