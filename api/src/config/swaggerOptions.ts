@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = path.dirname(`${__filename}`);
 
 export default {
 
@@ -22,7 +22,8 @@ export default {
 	baseDir: __dirname,
 	// Glob pattern to find your jsdoc files (multiple patterns can be added in an array)
 	filesPattern: [
-		'../../Public/Controllers/*.ts'
+		'../../Public/Controllers/*.ts',
+		'../../Private/Controllers/*.ts'
 	],
 	// URL where SwaggerUI will be rendered
 	swaggerUIPath: '/api-docs',
@@ -31,7 +32,7 @@ export default {
 	// Expose Open API JSON Docs documentation in `apiDocsPath` path.
 	exposeApiDocs: false,
 	// Open API JSON Docs endpoint.
-	apiDocsPath: '/v3/api-docs',
+	apiDocsPath: '/api-docs',
 	// Set non-required fields as nullable by default
 	notRequiredAsNullable: false,
 	/*
