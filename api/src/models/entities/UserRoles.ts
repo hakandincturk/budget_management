@@ -2,10 +2,10 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, ManyToOne, Re
 } from 'typeorm';
 
 import { Roles } from './Roles.js';
-import { Permissions } from './Permissions.js';
+import { Users } from './Users.js';
 
-@Entity('RolePermissions')
-export class RolePermissions {
+@Entity('UserRoles')
+export class UserRoles {
 
 	@PrimaryGeneratedColumn()
 		id: number;
@@ -13,11 +13,11 @@ export class RolePermissions {
 	@Column({name: 'is_removed', default: false})
 		is_removed: boolean;
 
-	@ManyToOne(() => Roles, role => role.rolePermissions)
+	@ManyToOne(() => Roles, role => role.userRoles)
 		role: Relation<Roles>;
 
-	@ManyToOne(() => Permissions, permissions => permissions.rolePermissions)
-		permission: Relation<Permissions>;
+	@ManyToOne(() => Users, users => users.userRoles)
+		user: Relation<Users>;
 
 	@CreateDateColumn({default: new Date()}) 
 		createdAt: Date;

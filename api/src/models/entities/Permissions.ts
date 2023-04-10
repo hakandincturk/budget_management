@@ -12,7 +12,7 @@ export class Permissions {
 	@Column()
 		name: string;
 	
-	@Column({name: 'is_removed'})
+	@Column({name: 'is_removed', default: false})
 		is_removed: boolean;
 
 	@OneToMany(() => RolePermissions, rolePermissions => rolePermissions.permission)

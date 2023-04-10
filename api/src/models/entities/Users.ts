@@ -1,4 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn} from 'typeorm'; 
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany} from 'typeorm'; 
+
+import { UserRoles } from './UserRoles.js';
 
 @Entity({name: 'Users'}) 
 export class Users {   
@@ -29,5 +31,8 @@ export class Users {
 
 	@CreateDateColumn({default: new Date()})
 		updatedAt: Date;
+
+	@OneToMany(() => UserRoles, userRoles => userRoles.role, {cascade: true})
+		userRoles: UserRoles[];
 
 }
