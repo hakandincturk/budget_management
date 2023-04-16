@@ -4,6 +4,7 @@ import md5 from 'md5';
 
 import { dataSource } from '../app.js';
 import { Users } from '../src/models/entities/Users.js';
+import { Lang } from '../src/config/enums.js';
 
 export const loggerMiddleware = (request: Request, response: Response, next: NextFunction) => {
 	console.log(`${request.method} ${request.path}`);
@@ -44,19 +45,23 @@ export const encryptPassword = (password: string) => {
 export const checkToken = () => {
 	return async (req: Request, res: Response, next: NextFunction) => {
 		try {
+			const language = req.headers.language?.toString() || 'tr';
 			if (!req.headers['access-token'] ?? req.cookies['access-token']) {
-				return res.status(401).json({type: false, message: 'Token not found'});
+				return res.status(401).json({type: false, message: Lang[language].Auth.error.tokenNotFound});
 			}
 			const token = req.headers['access-token'] ?? req.cookies['access-token'];
 			if (!token) {
-				return res.status(401).json({type: false, message: 'Token not found'});
+				return res.status(401).json({type: false, message: Lang[language].Auth.error.tokenNotFound});
 			}
 	
 			jwt.verify(token, process.env.TOKEN_SECRET || '', async (err: any, decoded: any) =>{
 				if (err) {
-					return res.status(401).json({type: false, message: 'Token not found'});
+					return res.status(401).json({type: false, message: Lang[language].Auth.error.tokenNotFound});
 				}
 				else {
+					req.decoded = {
+						id: Number(decoded.user_id)
+					};
 					next();
 				}
 			});
@@ -70,54 +75,32 @@ export const checkToken = () => {
 export const checkPermission = (permName: string) => {
 	return async (req: Request, res: Response, next: NextFunction) => {
 		try {
-			console.log('checkPermission --> ', permName);
+			const language = req.headers.language?.toString() || 'tr';
 			const userRepo = dataSource.getRepository(Users);
-			const user = await userRepo.find(
-				{
-					/*
-					 * select: [ 
-					 * 	'id',
-					 * 	'name',
-					 * 	'surname',
-					 * 	'email',
-					 * 	'phone_number',
-					 * 	'createdAt',
-					 * 	'updatedAt'
-					 * ],
-					 */
-					relations: {
-						userRoles: {
-							role: {
-								rolePermissions: {
-									permission: true
-								}
-							}
-						}
-					},
-					where: {
-						userRoles: {
-							role: {
-								rolePermissions: {
-									permission: {
-										clean_name: permName
-									}
-								}
-							}
-						}
-					},
-					join: {
-						alias: 'user',
-						leftJoinAndSelect: {
-							userRoles: 'user.userRoles',
-							role: 'userRoles.role',
-							rolePermissions: 'role.rolePermissions',
-							permission: 'rolePermissions.permission'
-						}
-					}
+			const user = await userRepo.createQueryBuilder('user')
+				.innerJoin('user.userRoles', 'userRoles')
+				.innerJoin('userRoles.role', 'role')
+				.innerJoin('role.rolePermissions', 'rolePermissions')
+				.innerJoin('rolePermissions.permission', 'permission')
+				.where('permission.clean_name = :permName', {permName})
+				.andWhere('user.id = :userId', {userId: req.decoded.id})
+				.select([
+					'user.id',
+					'user.name',
+					'user.surname',
+					'user.email',
+					'userRoles.id',
+					'role.name',
+					'role.clean_name',
+					'rolePermissions.id',
+					'permission.name',
+					'permission.clean_name'
+				])
+				.getOne();
+			if (!user) {
+				return res.status(401).json({type: false, message: Lang[language].Auth.error.unauthorizedLogin});
+			}
 
-				}
-			);
-			return res.json({type: false, message: 'error.message', data: user});
 			next();
 		}
 		catch (error) {

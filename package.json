@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "env-cmd -f ./env/dev.env nodemon ./api/app.ts",
+    "start": "env-cmd -f ./env/dev.env nodemon --files ./api/app.ts",
     "seeder": "ts-node ./api/src/models/seeders/index.ts --timeout 10 --exit"
   },
   "keywords": [],

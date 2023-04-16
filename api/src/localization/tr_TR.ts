@@ -11,7 +11,9 @@ export default {
 			login: 'Başarıyla giriş yapıldı'
 		},
 		error: {
-			wrongEmail: 'Hatalı email veya şifre'
+			wrongEmail: 'Hatalı email veya şifre',
+			tokenNotFound: 'Giriş yapmalısınız',
+			unauthorizedLogin: 'Bu işlemi yapmak için yetkiniz yok.'
 		}
 	},
 	Users: {
