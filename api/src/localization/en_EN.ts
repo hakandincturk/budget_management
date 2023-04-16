@@ -11,7 +11,9 @@ export default {
 			login: 'Successfully logged in'
 		},
 		error: {
-			wrongEmail: 'Incorrect email or password'
+			wrongEmail: 'Incorrect email or password',
+			tokenNotFound: 'You must login',
+			unauthorizedLogin: 'You are not authorized to perform this action.'
 		}
 	},
 	Users: {

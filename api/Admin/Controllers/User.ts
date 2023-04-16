@@ -14,10 +14,11 @@ class User{
 	 */
 
 	/**
-	 * GET /user/
+	 * GET /admin/user/
 	 * @tags Users
 	 * @summary get all user list
 	 * @return { Array<CreateUserRequest> } 200 - Success message
+	 * @security JWT
 	 */
 	static async all(req: Request, res: Response){
 		try {
@@ -31,11 +32,12 @@ class User{
 	}
 
 	/**
-	 * POST /user/
+	 * POST /admin/user/
 	 * @tags Users
 	 * @summary create a new user
 	 * @param { CreateUserRequest } request.body.required - User model
 	 * @return { Array<CreateUserRequest> } 200 - Success message
+	 * @security JWT
 	 */
 	static async create(req: Request, res: Response){
 		try {

@@ -10,10 +10,13 @@ export class Roles {
 	@PrimaryGeneratedColumn()
 		id: number;
 
-	@Column()
+	@Column({nullable: false})
 		name: string;
 
-	@Column({name: 'is_removed', default: false})
+	@Column({nullable: false})
+		clean_name: string;
+
+	@Column({name: 'is_removed', default: false, nullable: false})
 		is_removed: boolean;
 
 	@OneToMany(() => RolePermissions, userRoles => userRoles.role)

@@ -50,10 +50,6 @@ module.exports = {
 			'error',
 			'always'
 		],
-		'multiline-comment-style': [
-			'error',
-			'starred-block'
-		],
 		'padded-blocks': [
 			'error',
 			{

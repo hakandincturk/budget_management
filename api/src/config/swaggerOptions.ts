@@ -13,9 +13,11 @@ export default {
 		title: 'Budget Management API'
 	},
 	security: {
-		BasicAuth: {
-			type: 'http',
-			scheme: 'basic'
+		JWT: {
+			type: 'apiKey',
+			name: 'access-token',
+			in: 'header',
+			scheme: 'bearer'
 		}
 	},
 	// Base directory which we use to locate your JSDOC files
@@ -23,7 +25,8 @@ export default {
 	// Glob pattern to find your jsdoc files (multiple patterns can be added in an array)
 	filesPattern: [
 		'../../Public/Controllers/*.ts',
-		'../../Private/Controllers/*.ts'
+		'../../Private/Controllers/*.ts',
+		'../../Admin/Controllers/*.ts'
 	],
 	// URL where SwaggerUI will be rendered
 	swaggerUIPath: '/api-docs',
