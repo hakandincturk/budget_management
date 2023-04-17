@@ -9,4 +9,12 @@ router.use((req, res, next) => {
 	next(); 
 }).route('/').get(UserCardController.all);
 
+router.use((req, res, next) => {
+	next(); 
+}).route('/').post(UserCardController.create);
+
+router.use((req, res, next) => {
+	next(); 
+}).route('/:card_id').delete(UserCardController.delete);
+
 export default router;

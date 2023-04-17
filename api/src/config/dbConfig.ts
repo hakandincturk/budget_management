@@ -16,10 +16,10 @@ const devSource: DataSource = new DataSource  ({
 	password: '123456',
 	database: 'budget_management_dev',
 	synchronize: true,
-	logging: true,
+	logging: false,
 	entities: [ `${__dirname}/../models/entities/*.ts` ],
-	migrations: [ `${__dirname}/../models/migrations/*.ts` ],
-	subscribers: [ '../models/subscribers/*.ts' ]
+	migrations: [ `${__dirname}/../models/migrations/*.ts` ]
+	// subscribers: [ `${__dirname}/../models/subscribers/*.ts` ]
 });
 
 const developmentSource: DataSource = new DataSource ({

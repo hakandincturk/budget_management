@@ -34,6 +34,24 @@ export default {
 			alreadyExist: 'User already exist.'
 		}
 	},
+	UserCards: {
+		success: {
+			create: 'Card created successfully.',
+			update: 'Card updated successfully.',
+			delete: 'Card deleted successfully.'
+		},
+		error: {
+			create: 'Card could not be created.',
+			update: 'Card could not be updated.',
+			delete: 'Card could not be deleted.'
+		},
+		info: {
+			notFound: 'Card not found.',
+			get: 'Card retrieved successfully.',
+			gets: 'Cards retrieved successfully.',
+			alreadyExist: 'Card already exist.'
+		}
+	},
 	Joi: {
 		'any.required': '{{#label}} is required',
 		'array.base': '{{#label}} must be a array',

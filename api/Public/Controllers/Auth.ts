@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import AuthService from '../Services/Auth.js';
 
 import { IAuthLoginBody } from '../../src/models/interfaces/IAuthLoginBody.js';
-import { IResponseBodyWithData, IResponseBodyWithoutData } from '../../src/models/interfaces/IResponseBody.js';
+import { IResponseBody } from '../../src/models/interfaces/IResponseBody.js';
 
 class Auth{
 
@@ -21,10 +21,13 @@ class Auth{
 	 * @param { LoginRequest } request.body.required - User model
 	 * @return { object } 200 - Success message
 	 */
-	static async login(req: Request<IAuthLoginBody, object>, res: Response<IResponseBodyWithData, IResponseBodyWithoutData>){
+	static async login(req: Request<IAuthLoginBody, object>, res: Response<IResponseBody>){
 		try {
 			const language = req.headers.language?.toString() || 'tr';
 			const result = await AuthService.login(req.body, language);
+			if (!result.type) {
+				return res.json({ type: true, message: result.message});	
+			}
 			return res.json({ type: true, message: result.message, data: result.data });
 		}
 		catch (error) {

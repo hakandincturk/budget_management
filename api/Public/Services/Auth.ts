@@ -11,32 +11,33 @@ class Auth {
 	
 	static async login(body: IAuthLoginBody, language: string){
 		try {
-			const usersRepository = dataSource.getRepository(Users);
-			const result = await usersRepository.findOne({
-				where: {
-					email: body.email,
-					password: encryptPassword(body.password),
-					is_removed: false
+			const res = await dataSource.transaction(async (transactionManager) => {
+				const result = await transactionManager.findOne(Users, {
+					where: {
+						email: body.email,
+						password: encryptPassword(body.password),
+						is_removed: false
+					}
+				});
+	
+				if (!result) {
+					return { 
+						type: false, 
+						message: Lang[language].Auth.error.wrongEmail
+					};
 				}
-			});
-
-			if (!result) {
-				return { 
-					type: false, 
-					message: Lang[language].Auth.error.wrongEmail,
-					data: null
+	
+				const decode = {
+					user_id: result.id
 				};
-			}
-
-			const decode = {
-				user_id: result.id
-			};
-			
-			const TOKEN_SECRET = (process.env.TOKEN_SECRET)?.toString() || '123456';
-
-			const token = jwt.sign(decode, TOKEN_SECRET, {expiresIn: '1days'});
-
-			return { type: true, message: Lang[language].Auth.success.login, data: {token} };
+				
+				const TOKEN_SECRET = (process.env.TOKEN_SECRET)?.toString() || '123456';
+	
+				const token = jwt.sign(decode, TOKEN_SECRET, {expiresIn: '1days'});
+	
+				return { type: true, message: Lang[language].Auth.success.login, data: {token} };
+			});
+			return res;
 		}
 		catch (error) {
 			throw error;
