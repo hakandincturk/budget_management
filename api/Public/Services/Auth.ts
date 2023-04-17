@@ -34,7 +34,7 @@ class Auth {
 			
 			const TOKEN_SECRET = (process.env.TOKEN_SECRET)?.toString() || '123456';
 
-			const token = jwt.sign(decode, TOKEN_SECRET);
+			const token = jwt.sign(decode, TOKEN_SECRET, {expiresIn: '1days'});
 
 			return { type: true, message: Lang[language].Auth.success.login, data: {token} };
 		}

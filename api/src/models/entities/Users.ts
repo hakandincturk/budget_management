@@ -1,6 +1,7 @@
 import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany} from 'typeorm'; 
 
 import { UserRoles } from './UserRoles.js';
+import { UserCards } from './UserCards.js';
 
 @Entity({name: 'Users'}) 
 export class Users {   
@@ -34,5 +35,8 @@ export class Users {
 
 	@OneToMany(() => UserRoles, userRoles => userRoles.user, {cascade: true})
 		userRoles: UserRoles[];
+
+	@OneToMany(() => UserCards, userCards => userCards.user, {cascade: true})
+		userCards: UserCards[];
 
 }
