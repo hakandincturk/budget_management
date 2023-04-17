@@ -1,6 +1,8 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany} from 'typeorm'; 
+/* eslint-disable max-len */
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany, VirtualColumn} from 'typeorm'; 
 
 import { UserRoles } from './UserRoles.js';
+import { UserCards } from './UserCards.js';
 
 @Entity({name: 'Users'}) 
 export class Users {   
@@ -9,10 +11,10 @@ export class Users {
 		id: number; 
 
 	@Column() 
-		name: string; 
+	public name: string; 
 
 	@Column() 
-		surname: string; 
+	public surname: string; 
 
 	@Column() 
 		email: string;
@@ -34,5 +36,15 @@ export class Users {
 
 	@OneToMany(() => UserRoles, userRoles => userRoles.user, {cascade: true})
 		userRoles: UserRoles[];
+
+	@OneToMany(() => UserCards, userCards => userCards.user, {cascade: true})
+		userCards: UserCards[];
+
+	@VirtualColumn({
+		query(alias) {
+			return `CONCAT(${alias}.name, ' ', ${alias}.surname)`;
+		}
+	})
+	public fullName: string;
 
 }

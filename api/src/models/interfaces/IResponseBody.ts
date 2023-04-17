@@ -1,10 +1,5 @@
-export interface IResponseBodyWithData {   
+export interface IResponseBody {   
   type: boolean;
   message: string;
-  data:  object | null
-}
-
-export interface IResponseBodyWithoutData {   
-  type: boolean;
-  message: string;
+  data?:  object | null
 }

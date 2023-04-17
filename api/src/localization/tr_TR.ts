@@ -34,6 +34,24 @@ export default {
 			alreadyExist: 'Bu e-posta adresi ile daha önce kayıt yapılmış.'
 		}
 	},
+	UserCards: {
+		success: {
+			create: 'Kart başarıyla oluşturuldu.',
+			update: 'Kart başarıyla güncellendi.',
+			delete: 'Kart başarıyla silindi.'
+		},
+		error: {
+			create: 'Kart oluşturulurken bir hata meydana geldi.',
+			update: 'Kart güncellenirken bir hata meydana geldi.',
+			delete: 'Kart silinirken bir hata meydana geldi.'
+		},
+		info: {
+			notFound: 'Kart bulunamadı.',
+			get: 'Kart başarıyla getirildi.',
+			gets: 'Kartlar başarıyla getirildi.',
+			alreadyExist: 'Bu e-posta adresi ile daha önce kayıt yapılmış.'
+		}
+	},
 	Joi: {
 		'any.required': '{{#label}} gerekli',
 		'array.base': '{{#label}} bir dizi olmalı',

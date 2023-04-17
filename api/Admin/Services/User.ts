@@ -21,16 +21,19 @@ class User {
 
 	static async create(user: Users, language: string){
 		try {
-			const usersRepository = dataSource.getRepository(Users);
-			const isUserExist = await usersRepository.findOne({ where: { email: user.email } });
-			if (isUserExist) {
-				return { type: false, message: 'User already exist' };
-			}	
-
-			user.password = encryptPassword(user.password);
-			const newUser = await usersRepository.save(user);
+			const res = await dataSource.transaction(async (transactionManager) => {
+				const isUserExist = await transactionManager.findOne(Users, { where: { email: user.email } });
+				if (isUserExist) {
+					return { type: false, message: 'User already exist' };
+				}	
+	
+				user.password = encryptPassword(user.password);
+				const newUser = await transactionManager.save(user);
+				
+				return { type: true, message: Lang[language].Users.success.create, data: newUser };
+			});
+			return res;
 			
-			return { type: true, message: Lang[language].Users.success.create, data: newUser };
 		}
 		catch (error) {
 			throw error;

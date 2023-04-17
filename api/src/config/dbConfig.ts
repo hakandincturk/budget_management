@@ -18,8 +18,8 @@ const devSource: DataSource = new DataSource  ({
 	synchronize: true,
 	logging: false,
 	entities: [ `${__dirname}/../models/entities/*.ts` ],
-	migrations: [ `${__dirname}/../models/migrations/*.ts` ],
-	subscribers: [ '../models/subscribers/*.ts' ]
+	migrations: [ `${__dirname}/../models/migrations/*.ts` ]
+	// subscribers: [ `${__dirname}/../models/subscribers/*.ts` ]
 });
 
 const developmentSource: DataSource = new DataSource ({

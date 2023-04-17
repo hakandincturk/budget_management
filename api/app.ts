@@ -50,7 +50,9 @@ console.log(`postgres connected to ${dataSource.options.database}`);
 
 expressJSDOCSwagger(app)(swaggerOptions);
 
-app.use(loggerMiddleware);
+if (nodeEnv !== 'prod') {
+	app.use(loggerMiddleware);
+}
 
 app.use('/', publicRoutes);
 app.use('/private', privateRoutes);
