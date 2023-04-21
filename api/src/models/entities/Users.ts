@@ -1,8 +1,9 @@
 /* eslint-disable max-len */
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany, VirtualColumn} from 'typeorm'; 
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany, VirtualColumn, JoinColumn, ManyToOne} from 'typeorm'; 
 
 import { UserRoles } from './UserRoles.js';
 import { UserCards } from './UserCards.js';
+import { UserTypes } from './UserTypes.js';
 
 @Entity({name: 'Users'}) 
 export class Users {   
@@ -33,6 +34,10 @@ export class Users {
 
 	@CreateDateColumn({default: new Date()})
 		updatedAt: Date;
+
+	@ManyToOne(() => UserTypes, userType => userType.id, {cascade: true})
+	@JoinColumn({name: 'user_type_id'})
+		userType: UserTypes;
 
 	@OneToMany(() => UserRoles, userRoles => userRoles.user, {cascade: true})
 		userRoles: UserRoles[];

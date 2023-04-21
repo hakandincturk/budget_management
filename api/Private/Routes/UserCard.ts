@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import UserCardController from '../Controllers/UserCards.js';
+import UserCardController from '../Controllers/UserCard.js';
 
 import { checkPermission } from '../../helpers/General.js';
 

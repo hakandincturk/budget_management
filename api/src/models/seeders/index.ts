@@ -11,28 +11,34 @@ const truncateQueue = [
 	'RolePermissions',
 	'Permissions',
 	'Roles',
-	'Users'
+	'UserCards',
+	'Users',
+	'UserTypes',
+	'Outgoings',
+	'Installments'
 ];
 
 const seedQueue = [
+	'UserTypes',
 	'Users',
 	'Roles',
 	'Permissions',
 	'RolePermissions',
-	'UserRoles'
+	'UserRoles',
+	'UserCards'
 ];
 
 const runSeeder = async () => {
 	console.log('Veritabanı sıfırlama ve kurma işlemi yapılıyor..');
 
 	for (const table of truncateQueue) {
-		truncate(`${table}`);
+		await truncate(`${table}`);
 	}
 
 	for (const table of seedQueue) {
 		console.log(' -- ', table);
-		import(`${__dirname}/${table}.js`).then(module => {
-			seeder(`${table}`, module.default);
+		import(`${__dirname}/${table}.js`).then(async (module) => {
+			await seeder(`${table}`, module.default);
 		});
 	}
 };

@@ -1,6 +1,4 @@
-/* eslint-disable quotes */
 /* eslint-disable max-len */
-import 'dotenv';
 import { Users } from '../../src/models/entities/Users.js';
 import { UserCards } from '../../src/models/entities/UserCards.js';
 
@@ -16,7 +14,17 @@ class UserCard {
 			const userRepository = dataSource.getRepository(Users);
 			const allUserCards = await userRepository.createQueryBuilder('user')
 				.innerJoin('user.userCards', 'userCards')
-				.select([ 'user.id', 'user.fullName', 'userCards.id', 'userCards.name', 'userCards.number', 'userCards.expire_date', 'userCards.ccv', 'userCards.limit', 'userCards.is_removed' ])
+				.select([ 
+					'user.id',
+					'user.fullName',
+					'userCards.id',
+					'userCards.name',
+					'userCards.number',
+					'userCards.expire_date',
+					'userCards.ccv',
+					'userCards.limit',
+					'userCards.is_removed'
+				])
 				.where('user.id = :userId', {userId})
 				.andWhere('userCards.is_removed = :isRemoved', {isRemoved: false})
 				.getOne();

@@ -52,6 +52,24 @@ export default {
 			alreadyExist: 'Bu e-posta adresi ile daha önce kayıt yapılmış.'
 		}
 	},
+	Outgoings: {
+		success: {
+			create: 'Borç başarıyla oluşturuldu.',
+			update: 'Borç başarıyla güncellendi.',
+			delete: 'Borç başarıyla silindi.'
+		},
+		error: {
+			create: 'Borç oluşturulurken bir hata meydana geldi.',
+			update: 'Borç güncellenirken bir hata meydana geldi.',
+			delete: 'Borç silinirken bir hata meydana geldi.'
+		},
+		info: {
+			notFound: 'Borç bulunamadı.',
+			get: 'Borç başarıyla getirildi.',
+			gets: 'Borçlar başarıyla getirildi.',
+			alreadyExist: 'Bu e-posta adresi ile daha önce kayıt yapılmış.'
+		}
+	},
 	Joi: {
 		'any.required': '{{#label}} gerekli',
 		'array.base': '{{#label}} bir dizi olmalı',

@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Relation } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Relation } from 'typeorm';
 
 import { Users } from './Users.js';
 
@@ -27,6 +27,7 @@ export class UserCards {
 		is_removed: boolean;
 
 	@ManyToOne(() => Users, user => user.id)
+	@JoinColumn({name: 'user_id'})
 		user: Relation<Users>;
 
 	@CreateDateColumn({default: new Date()}) 
