@@ -54,7 +54,8 @@ class Outgoing{
 					total_installment_count: 0,
 					is_paid: body.is_paid || false,
 					paid_date: body.paid_date ? body.paid_date : new Date('1-1-2000'),
-					purchase_date: new Date(body.purchase_date) || null
+					purchase_date: new Date(body.purchase_date) || null,
+					description: body.description
 				};
 
 				if (body.total_installment_count === 0) { // guncel ay icin borc
@@ -130,6 +131,36 @@ class Outgoing{
 
 				return { type: true, message: Lang[language].Outgoings.success.create};
 			});
+			return res;
+		}
+		catch (error) {
+			throw error;
+		}
+	}
+
+	static async installments(id: number, language: string) {
+		try {
+			const res = await dataSource.transaction(async (transactionManager) => {
+				const result = await transactionManager.findOne(
+					Outgoings,
+					{
+						relations: {
+							installment: true
+						},
+						order: {
+							installment: {
+								installment: 'ASC'
+							}
+						},
+						where: {
+							id: id
+						}
+					}
+				);
+
+				return {type: true, message: Lang[language].Installments.info.gets, data: result};
+			});
+
 			return res;
 		}
 		catch (error) {

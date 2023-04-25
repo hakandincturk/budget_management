@@ -16,6 +16,7 @@ class Outgoing{
 	 * @property {number} total_installment_count
 	 * @property {boolean} is_paid
 	 * @property {string} paid_date
+	 * @property {string} description
 	 */
 
 	/**
@@ -33,6 +34,24 @@ class Outgoing{
 				return {type: false, message: result.message};
 			}
 			return res.json({ type: true, message: result.message });
+		}
+		catch (error) {
+			throw error;
+		}
+	}
+
+	/**
+	 * GET /private/outgoing/installments/{id}
+	 * @tags Private/Outgoing
+	 * @summary get all installment belongs to outgoing
+	 * @param {number} id.path.required - outgoing
+	 * @security JWT
+	 */
+	static async installments (req: Request, res: Response<IResponseBody>) {
+		try {
+			const language = req.headers.language?.toString() || 'tr';
+			const result = await OutgoingService.installments(Number(req.params.id), language);
+			return res.json({ type: true, message: result.message, data: result.data });
 		}
 		catch (error) {
 			throw error;

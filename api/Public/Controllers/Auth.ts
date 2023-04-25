@@ -26,7 +26,7 @@ class Auth{
 			const language = req.headers.language?.toString() || 'tr';
 			const result = await AuthService.login(req.body, language);
 			if (!result.type) {
-				return res.json({ type: true, message: result.message});	
+				return res.json({ type: false, message: result.message});	
 			}
 			return res.json({ type: true, message: result.message, data: result.data });
 		}

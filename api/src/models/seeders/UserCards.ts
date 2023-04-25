@@ -6,7 +6,7 @@ export default [
 		expire_date: '12/2022',
 		ccv: 123,
 		limit: 1000,
-		user_id: 1
+		user: 1
 	},
 	{
 		id: 2,
@@ -15,7 +15,7 @@ export default [
 		expire_date: '12/2023',
 		ccv: 123,
 		limit: 1000,
-		user_id: 1
+		user: 1
 	},
 	{
 		id: 3,
@@ -24,7 +24,7 @@ export default [
 		expire_date: '12/2024',
 		ccv: 123,
 		limit: 1000,
-		user_id: 2
+		user: 2
 	},
 	{
 		id: 4,
@@ -33,6 +33,6 @@ export default [
 		expire_date: '12/2025',
 		ccv: 123,
 		limit: 1000,
-		user_id: 1
+		user: 1
 	}
 ];

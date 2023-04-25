@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import OutgoingController from '../Controllers/Outgoing.js';
+import InstallmentController from '../Controllers/Installment.js';
 
 import { checkPermission } from '../../helpers/General.js';
 
@@ -7,10 +7,10 @@ const router = Router();
 
 router.use((req, res, next) => {
 	next(); 
-}).route('/').post(OutgoingController.create);
+}).route('/currentMonth').get(InstallmentController.currentMonth);
 
 router.use((req, res, next) => {
 	next(); 
-}).route('/installments/:id').get(OutgoingController.installments);
+}).route('/specificMonth/:year/:month').get(InstallmentController.specificMonth);
 
 export default router;

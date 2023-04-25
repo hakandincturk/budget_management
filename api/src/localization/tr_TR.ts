@@ -70,6 +70,24 @@ export default {
 			alreadyExist: 'Bu e-posta adresi ile daha önce kayıt yapılmış.'
 		}
 	},
+	Installments: {
+		success: {
+			create: 'Taksit başarıyla oluşturuldu.',
+			update: 'Taksit başarıyla güncellendi.',
+			delete: 'Taksit başarıyla silindi.'
+		},
+		error: {
+			create: 'Taksit oluşturulurken bir hata meydana geldi.',
+			update: 'Taksit güncellenirken bir hata meydana geldi.',
+			delete: 'Taksit silinirken bir hata meydana geldi.'
+		},
+		info: {
+			notFound: 'Taksit bulunamadı.',
+			get: 'Taksit başarıyla getirildi.',
+			gets: 'Taksitler başarıyla getirildi.',
+			alreadyExist: 'Bu e-posta adresi ile daha önce kayıt yapılmış.'
+		}
+	},
 	Joi: {
 		'any.required': '{{#label}} gerekli',
 		'array.base': '{{#label}} bir dizi olmalı',

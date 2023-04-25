@@ -70,6 +70,24 @@ export default {
 			alreadyExist: 'Outgoing money already exist.'
 		}
 	},
+	Installments: {
+		success: {
+			create: 'Installment created successfully.',
+			update: 'Installment updated successfully.',
+			delete: 'Installment deleted successfully.'
+		},
+		error: {
+			create: 'Installment could not be created.',
+			update: 'Installment could not be updated.',
+			delete: 'Installment could not be deleted.'
+		},
+		info: {
+			notFound: 'Installment not found.',
+			get: 'Installment retrieved successfully.',
+			gets: 'Installments retrieved successfully.',
+			alreadyExist: 'Installment already exist.'
+		}
+	},
 	Joi: {
 		'any.required': '{{#label}} is required',
 		'array.base': '{{#label}} must be a array',

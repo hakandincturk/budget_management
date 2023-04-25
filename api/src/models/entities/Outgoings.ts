@@ -36,6 +36,9 @@ export class Outgoings {
 
 	@Column({nullable: true}) 
 		paid_date: Date;
+
+	@Column({nullable: true})
+		description: string;
 	
 	@Column({name: 'is_removed', default: false, nullable: false})
 		is_removed: boolean;
@@ -46,7 +49,7 @@ export class Outgoings {
 	@CreateDateColumn({default: new Date()})
 		updatedAt: Date;
 
-	@OneToMany(() => Installments, installment => installment.id)
-		installment: Installments;
+	@OneToMany(() => Installments, installment => installment.outgoing)
+		installment: Relation<Installments>;
 
 }

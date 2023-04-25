@@ -17,6 +17,11 @@ class Auth {
 						email: body.email,
 						password: encryptPassword(body.password),
 						is_removed: false
+					},
+					select: {
+						id: true,
+						name: true,
+						surname: true
 					}
 				});
 	
@@ -28,7 +33,8 @@ class Auth {
 				}
 	
 				const decode = {
-					user_id: result.id
+					user_id: result.id,
+					name: `${result.name} ${result.surname}`
 				};
 				
 				const TOKEN_SECRET = (process.env.TOKEN_SECRET)?.toString() || '123456';
