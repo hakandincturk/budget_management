@@ -41,6 +41,23 @@ class Outgoing{
 	}
 
 	/**
+	 * GET /private/outgoing/
+	 * @tags Private/Outgoing
+	 * @summary get all outgoings belongs to user
+	 * @security JWT
+	 */
+	static async all (req: Request, res: Response<IResponseBody>) {
+		try {
+			const language = req.headers.language?.toString() || 'tr';
+			const result = await OutgoingService.all(req.decoded.id, language);
+			return res.json({ type: true, message: result.message, data: result.data });
+		}
+		catch (error) {
+			throw error;
+		}
+	}
+
+	/**
 	 * GET /private/outgoing/installments/{id}
 	 * @tags Private/Outgoing
 	 * @summary get all installment belongs to outgoing

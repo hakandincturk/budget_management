@@ -3,7 +3,14 @@ import { Request, Response } from 'express';
 
 import InstallmentService from '../Services/Installment.js';
 
+import { IInstallmentPayBody } from '../../src/models/interfaces/Installments.js';
 import { IResponseBody } from '../../src/models/interfaces/IResponseBody';
+
+/**
+ * @typedef {object} PayInstallmentBody
+ * @property { number } id
+ * @property { string } date
+*/
 
 class Installment {
 
@@ -37,6 +44,25 @@ class Installment {
 			const language = req.headers.language?.toString() || 'tr';
 			const result = await InstallmentService.specificMonth(Number(req.params.month), Number(req.params.year), language);
 			return res.json({ type: true, message: result.message, data: result.data });
+		}
+		catch (error) {
+			throw error;
+		}
+	}
+
+	/**
+	 * POST /private/installment/pay
+	 * @tags Private/Installment
+	 * @summary pay installment
+	 * @param { PayInstallmentBody } request.body.required
+	 * @security JWT
+	 */
+	static async pay(req: Request<IInstallmentPayBody>, res: Response<IResponseBody>) {
+		try {
+			const language = req.headers.language?.toString() || 'tr';
+			console.log(req.body);
+			const result = await InstallmentService.pay(req.body, language);
+			return res.json({ type: true, message: result.message });
 		}
 		catch (error) {
 			throw error;

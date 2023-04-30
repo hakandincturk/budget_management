@@ -56,7 +56,7 @@ class UserCard {
 				if (!createUserCard) {
 					return { type: false, message: Lang[language].UserCards.error.create};					
 				}
-				return { type: true, message: Lang[language].UserCards.success.get};
+				return { type: true, message: Lang[language].UserCards.success.create};
 			});
 			return res;
 		}

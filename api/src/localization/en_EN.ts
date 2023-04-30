@@ -74,7 +74,8 @@ export default {
 		success: {
 			create: 'Installment created successfully.',
 			update: 'Installment updated successfully.',
-			delete: 'Installment deleted successfully.'
+			delete: 'Installment deleted successfully.',
+			paid: 'Installment paid successfully.'
 		},
 		error: {
 			create: 'Installment could not be created.',

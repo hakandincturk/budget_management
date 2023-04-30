@@ -5,6 +5,8 @@ import { dataSource } from '../../app.js';
 import { Outgoings } from '../../src/models/entities/Outgoings.js';
 import { Installments } from '../../src/models/entities/Installments.js';
 
+import { IInstallmentPayBody } from '../../src/models/interfaces/Installments.js';
+
 import { Lang } from '../../src/config/enums.js';
 
 class Installment {
@@ -59,6 +61,53 @@ class Installment {
 				);
 
 				return {type: true, message: Lang[language].Installments.info.gets, data: result};
+			});
+			return res;
+		}
+		catch (error) {
+			throw error;
+		}
+	}
+
+	static async pay(body: IInstallmentPayBody, language: string) {
+		try {
+			const res = await dataSource.transaction(async (transactionManager) => {
+				const installemnt = await transactionManager.findOne(
+					Installments, {
+						select: [
+							'id',
+							'installment',
+							'total_installment_count',
+							'outgoing'
+						],
+						where: {
+							id: body.id
+						}
+					}
+				);
+
+				if (!installemnt) {
+					return {type: false, message: Lang[language].Installments.error.notFound};
+				}
+
+				await transactionManager.update(
+					Installments,
+					{ id: body.id }, 
+					{ is_paid: true, paid_date: body.date }
+				);
+
+				console.log(installemnt.installment === installemnt.total_installment_count);
+				console.log('installemnt.outgoing -->', JSON.parse(JSON.stringify(installemnt)));
+				
+				if (installemnt.installment === installemnt.total_installment_count) {
+					await transactionManager.update(
+						Outgoings,
+						{ id: installemnt.outgoing.id }, 
+						{ is_paid: true, paid_date: body.date }
+					);
+				}
+
+				return {type: true, message: Lang[language].Installments.success.paid};
 			});
 			return res;
 		}

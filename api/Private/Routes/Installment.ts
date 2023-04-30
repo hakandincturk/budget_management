@@ -13,4 +13,8 @@ router.use((req, res, next) => {
 	next(); 
 }).route('/specificMonth/:year/:month').get(InstallmentController.specificMonth);
 
+router.use((req, res, next) => {
+	next(); 
+}).route('/pay').post(InstallmentController.pay);
+
 export default router;

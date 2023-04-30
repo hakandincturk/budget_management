@@ -74,7 +74,8 @@ export default {
 		success: {
 			create: 'Taksit başarıyla oluşturuldu.',
 			update: 'Taksit başarıyla güncellendi.',
-			delete: 'Taksit başarıyla silindi.'
+			delete: 'Taksit başarıyla silindi.',
+			paid: 'Taksit başarıyla ödendi.'
 		},
 		error: {
 			create: 'Taksit oluşturulurken bir hata meydana geldi.',

@@ -138,6 +138,44 @@ class Outgoing{
 		}
 	}
 
+	static async all(userId: number, language: string) {
+		try {
+			const res = await dataSource.transaction(async (transactionManager) => {
+
+				const user = await transactionManager.findOne(Users, {where: {id: userId}});
+				if (!user) { // kullanici var mi yok mu kontrolu
+					return { type: false, message: Lang[language].Users.info.notFound};
+				}
+
+				const outgoingRepo = transactionManager.getRepository(Outgoings);
+				const result = await outgoingRepo.createQueryBuilder('outgoing')
+					.innerJoin('outgoing.userCard', 'userCard')
+					.where('outgoing.user = :userId', {userId: userId})
+					.select([
+						'outgoing.id',
+						'outgoing.total_amount',
+						'outgoing.monthly_amount',
+						'outgoing.total_installment_count',
+						'outgoing.is_paid',
+						'outgoing.paid_date',
+						'outgoing.purchase_date',
+						'outgoing.description',
+						'userCard.id',
+						'userCard.name'
+					])
+					.orderBy('outgoing.createdAt', 'DESC')
+					.getMany();
+
+				return {type: true, message: Lang[language].Outgoings.info.get, data: result};
+			});
+
+			return res;
+		}
+		catch (error) {
+			throw error;
+		}
+	}
+
 	static async installments(id: number, language: string) {
 		try {
 			const res = await dataSource.transaction(async (transactionManager) => {

@@ -11,6 +11,10 @@ router.use((req, res, next) => {
 
 router.use((req, res, next) => {
 	next(); 
+}).route('/').get(OutgoingController.all);
+
+router.use((req, res, next) => {
+	next(); 
 }).route('/installments/:id').get(OutgoingController.installments);
 
 export default router;
