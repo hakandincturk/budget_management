@@ -96,9 +96,6 @@ class Installment {
 					{ is_paid: true, paid_date: body.date }
 				);
 
-				console.log(installemnt.installment === installemnt.total_installment_count);
-				console.log('installemnt.outgoing -->', JSON.parse(JSON.stringify(installemnt)));
-				
 				if (installemnt.installment === installemnt.total_installment_count) {
 					await transactionManager.update(
 						Outgoings,
