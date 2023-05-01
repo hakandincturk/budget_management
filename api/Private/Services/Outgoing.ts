@@ -15,6 +15,8 @@ class Outgoing{
 
 	static async create (body: IOutgoingCreateBody, language: string) {
 		try {
+			console.log(body);
+			
 			const res = await dataSource.transaction(async (transactionManager) => {
 				const user = await transactionManager.findOne(
 					Users, {

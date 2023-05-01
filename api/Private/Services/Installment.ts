@@ -80,6 +80,9 @@ class Installment {
 							'total_installment_count',
 							'outgoing'
 						],
+						relations: {
+							outgoing: true
+						},
 						where: {
 							id: body.id
 						}
