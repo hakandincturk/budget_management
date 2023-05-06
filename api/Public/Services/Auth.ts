@@ -12,19 +12,25 @@ class Auth {
 	static async login(body: IAuthLoginBody, language: string){
 		try {
 			const res = await dataSource.transaction(async (transactionManager) => {
-				const result = await transactionManager.findOne(Users, {
-					where: {
-						email: body.email,
-						password: encryptPassword(body.password),
-						is_removed: false
-					},
-					select: {
-						id: true,
-						name: true,
-						surname: true
-					}
-				});
-	
+				const result = await transactionManager.createQueryBuilder(Users, 'user')
+					.innerJoinAndSelect(
+						'user.userRoles', 'userRoles',
+						'userRoles.is_removed = :roleIsRemoved', {roleIsRemoved: false})
+					.innerJoin('userRoles.role', 'role')
+					.andWhere('user.email = :email', {email: body.email})
+					.andWhere('user.password = :password', {password: encryptPassword(body.password)})
+					.andWhere('user.is_removed = :is_removed', {is_removed: false})
+					.select([
+						'user.id',
+						'user.name',
+						'user.surname',
+						'user.email',
+						'userRoles.id',
+						'role.name',
+						'role.clean_name'
+					])
+					.getOne();
+
 				if (!result) {
 					return { 
 						type: false, 
@@ -41,7 +47,14 @@ class Auth {
 	
 				const token = jwt.sign(decode, TOKEN_SECRET, {expiresIn: '1days'});
 	
-				return { type: true, message: Lang[language].Auth.success.login, data: {token} };
+				return { 
+					type: true,
+					message: Lang[language].Auth.success.login, 
+					data: {
+						token: token,
+						roles: result.userRoles
+					}
+				};
 			});
 			return res;
 		}
