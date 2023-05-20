@@ -5,7 +5,7 @@ import { UserCards } from '../../src/models/entities/UserCards.js';
 import { dataSource } from '../../app.js';
 
 import { Lang } from '../../src/config/enums.js';
-import { IUserCardCreateBody } from '../../src/models/interfaces/UserCards.js';
+import { IUserCardCreateBody } from '../../src/models/interfaces/IUserCards.js';
 
 class UserCard {
 

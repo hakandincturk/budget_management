@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 
 import InstallmentService from '../Services/Installment.js';
 
-import { IInstallmentPayBody } from '../../src/models/interfaces/Installments.js';
+import { IInstallmentPayBody } from '../../src/models/interfaces/IInstallments.js';
 import { IResponseBody } from '../../src/models/interfaces/IResponseBody';
 
 /**
@@ -42,7 +42,7 @@ class Installment {
 	static async specificMonth(req: Request, res: Response<IResponseBody>) {
 		try {
 			const language = req.headers.language?.toString() || 'tr';
-			const result = await InstallmentService.specificMonth(Number(req.params.month), Number(req.params.year), language);
+			const result = await InstallmentService.specificMonth(Number(req.params.month), Number(req.params.year), language, req.decoded);
 			return res.json({ type: true, message: result.message, data: result.data });
 		}
 		catch (error) {

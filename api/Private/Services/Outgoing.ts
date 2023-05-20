@@ -5,7 +5,7 @@ import { UserCards } from '../../src/models/entities/UserCards.js';
 import { Outgoings } from '../../src/models/entities/Outgoings.js';
 import { Installments } from '../../src/models/entities/Installments.js';
 
-import { IOutgoingCreateBody } from '../../src/models/interfaces/Outgoings.js';
+import { IOutgoingCreateBody } from '../../src/models/interfaces/IOutgoings.js';
 
 import { dataSource } from '../../app.js';
 
@@ -16,6 +16,7 @@ class Outgoing{
 	static async create (body: IOutgoingCreateBody, language: string) {
 		try {
 			console.log(body);
+			console.log('body.userId -->', body.userId);
 			
 			const res = await dataSource.transaction(async (transactionManager) => {
 				const user = await transactionManager.findOne(
@@ -59,37 +60,45 @@ class Outgoing{
 					purchase_date: new Date(body.purchase_date) || null,
 					description: body.description
 				};
+				console.log('body.total_installment_count -->', body.purchase_date);
+				const startDate = moment(new Date(body.purchase_date));
+				console.log('startDate -->', startDate);
+				console.log('month -->', startDate.month());
 
 				if (body.total_installment_count === 0) { // guncel ay icin borc
+					console.log(1);
+					
 					const createOutgoing = await transactionManager.save(Outgoings, outgoingBody);
+					console.log(2);
 
-					const startDate = moment(new Date()).format('DD/MM/YYYY');
 					const installmentBody = {
 						outgoing: createOutgoing,
-						amount: body.total_amount,
-						total_amount: body.total_amount,
+						amount: Number(body.total_amount),
+						total_amount: Number(body.total_amount),
 						installment: 0,
 						total_installment_count: 0,
-						month: moment(startDate).month() + 1,
-						year: moment(startDate).year(),
+						month: startDate.month() + 1,
+						year: startDate.year(),
 						is_paid: body.is_paid || false,
 						paid_date: body.paid_date ? body.paid_date : new Date('1-1-2000')
 					};
+					console.log('installmentBody -->', installmentBody);
 
 					await transactionManager.save(Installments, installmentBody);
+					console.log(4);
+
 				}
 				else if (body.total_installment_count === 1) { // bir sonra ki ay icin borc
 					const createOutgoing = await transactionManager.save(Outgoings, outgoingBody);
 
-					const startDate = moment(new Date(body.purchase_date)).format('DD/MM/YYYY');
 					const installmentBody = {
 						outgoing: createOutgoing,
 						amount: body.total_amount,
 						total_amount: body.total_amount,
 						installment: 0,
 						total_installment_count: 0,
-						month: moment(startDate).month() + 1,
-						year: moment(startDate).year(),
+						month: startDate.month() + 1,
+						year: startDate.year(),
 						is_paid: body.is_paid || false,
 						paid_date: body.paid_date ? body.paid_date : new Date('1-1-2000')
 					};
@@ -105,7 +114,6 @@ class Outgoing{
 
 					const createOutgoing = await transactionManager.save(Outgoings, outgoingBody);
 
-					const startDate = moment(new Date(body.purchase_date));
 					// eger odeme bu aydan basliyorsa burayi ac
 					// if (body.start_this_month) {  
 					// 	startDate = startDate.subtract(1, 'M');
@@ -152,7 +160,8 @@ class Outgoing{
 				const outgoingRepo = transactionManager.getRepository(Outgoings);
 				const result = await outgoingRepo.createQueryBuilder('outgoing')
 					.innerJoin('outgoing.userCard', 'userCard')
-					.where('outgoing.user = :userId', {userId: userId})
+					.andWhere('outgoing.user = :userId', {userId: userId})
+					.andWhere('outgoing.is_removed = :is_removed', {is_removed: false})
 					.select([
 						'outgoing.id',
 						'outgoing.total_amount',
@@ -193,7 +202,11 @@ class Outgoing{
 							}
 						},
 						where: {
-							id: id
+							id: id,
+							is_removed: false,
+							installment: {
+								is_removed: false
+							}
 						}
 					}
 				);
@@ -202,6 +215,40 @@ class Outgoing{
 			});
 
 			return res;
+		}
+		catch (error) {
+			throw error;
+		}
+	}
+
+	static async delete(id: number, userId: number, language: string){
+		try {
+			const res = await dataSource.transaction(async (transactionManager) => {
+				const user = await transactionManager.findOne(Users, { where: { id: userId } });
+				if (!user) {
+					return { type: false, message: Lang[language].Users.info.notFound };
+				}	
+
+				const outgoing = await transactionManager.findOne(Outgoings, { where: { id: id } });
+				if (!outgoing) {
+					return { type: false, message: Lang[language].Outgoings.info.notFound };
+				}
+
+				await transactionManager.update(
+					Installments, 
+					{
+						outgoing: outgoing
+					},
+					{ is_removed: true }
+				); 
+	
+				outgoing.is_removed = true;
+				await transactionManager.save(Outgoings, outgoing);
+				
+				return { type: true, message: Lang[language].Outgoings.success.delete};
+			});
+			return res;
+			
 		}
 		catch (error) {
 			throw error;

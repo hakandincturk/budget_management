@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import OutgoingService from '../Services/Outgoing.js';
 
-import { IOutgoingCreateBody } from '../../src/models/interfaces/Outgoings';
+import { IOutgoingCreateBody } from '../../src/models/interfaces/IOutgoings.js';
 import { IResponseBody } from '../../src/models/interfaces/IResponseBody.js';
 
 class Outgoing{
@@ -69,6 +69,27 @@ class Outgoing{
 			const language = req.headers.language?.toString() || 'tr';
 			const result = await OutgoingService.installments(Number(req.params.id), language);
 			return res.json({ type: true, message: result.message, data: result.data });
+		}
+		catch (error) {
+			throw error;
+		}
+	}
+
+	/**
+	 * DELETE /private/outgoing/{id}
+	 * @tags Private/Outgoing
+	 * @summary delete outgoing
+	 * @param {number} id.path.required - outgoing
+	 * @security JWT
+	 */
+	static async delete (req: Request, res: Response<IResponseBody>) {
+		try {
+			const language = req.headers.language?.toString() || 'tr';
+			const result = await OutgoingService.delete(Number(req.params.id), Number(req.decoded.id), language);
+			if (!result.type) {
+				return {type: false, message: result.message};
+			}
+			return res.json({ type: true, message: result.message });
 		}
 		catch (error) {
 			throw error;

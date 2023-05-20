@@ -50,6 +50,25 @@ class User{
 		}
 	}
 
+	/**
+	 * POST /admin/user/{id}
+	 * @tags Users
+	 * @summary delete a user
+	 * @param { CreateUserRequest } request.body.required - User model
+	 * @param {number} id.path.required
+	 * @security JWT
+	 */
+	static async delete(req: Request, res: Response){
+		try {
+			const language = req.headers.language?.toString() || 'tr';
+			const result = await UserService.delete(Number(req.params.id), language);
+			return res.json({ type: true, message: result.message, data: result.data });
+		}
+		catch (error) {
+			throw error;
+		}
+	}
+
 }
 
 export default User;

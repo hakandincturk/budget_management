@@ -5,9 +5,11 @@ import { dataSource } from '../../app.js';
 import { Outgoings } from '../../src/models/entities/Outgoings.js';
 import { Installments } from '../../src/models/entities/Installments.js';
 
-import { IInstallmentPayBody } from '../../src/models/interfaces/Installments.js';
+import { IInstallmentPayBody } from '../../src/models/interfaces/IInstallments.js';
 
 import { Lang } from '../../src/config/enums.js';
+import { Users } from '../../src/models/entities/Users.js';
+import { DecodedObject } from '../../src/models/interfaces/IDecoded.js';
 
 class Installment {
 
@@ -41,9 +43,22 @@ class Installment {
 		}
 	}
 
-	static async specificMonth(month: number, year: number, language: string) {
+	static async specificMonth(month: number, year: number, language: string, decoded: DecodedObject) {
 		try {
 			const res = await dataSource.transaction(async (transactionManager) => {
+				const user = await transactionManager.findOne(
+					Users,
+					{
+						where: {
+							id: decoded.id
+						}
+					}
+				);
+
+				if (!user) {
+					return {type: false, message: Lang[language].Users.info.notFound};
+				}
+
 				const result = await transactionManager.find(
 					Installments,
 					{
@@ -54,8 +69,12 @@ class Installment {
 							}
 						},
 						where: {
+							outgoing: {
+								user: user
+							},
 							month: month,
-							year: year
+							year: year,
+							is_removed: false
 						}
 					}
 				);

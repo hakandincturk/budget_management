@@ -7,6 +7,10 @@ const router = Router();
 
 router.use((req, res, next) => {
 	next(); 
+}).route('/:id').delete(OutgoingController.delete);
+
+router.use((req, res, next) => {
+	next(); 
 }).route('/').post(OutgoingController.create);
 
 router.use((req, res, next) => {

@@ -31,6 +31,10 @@ class Auth {
 					])
 					.getOne();
 
+				console.log(body.email);
+				console.log(body.password);
+				console.log(encryptPassword(body.password));
+
 				if (!result) {
 					return { 
 						type: false, 
