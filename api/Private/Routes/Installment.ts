@@ -5,16 +5,8 @@ import { checkPermission } from '../../helpers/General.js';
 
 const router = Router();
 
-router.use((req, res, next) => {
-	next(); 
-}).route('/currentMonth').get(InstallmentController.currentMonth);
-
-router.use((req, res, next) => {
-	next(); 
-}).route('/specificMonth/:year/:month').get(InstallmentController.specificMonth);
-
-router.use((req, res, next) => {
-	next(); 
-}).route('/pay').post(InstallmentController.pay);
+router.get('/currentMonth', InstallmentController.currentMonth);
+router.get('/specificMonth/:year/:month', InstallmentController.specificMonth);
+router.post('/pay', InstallmentController.pay);
 
 export default router;
