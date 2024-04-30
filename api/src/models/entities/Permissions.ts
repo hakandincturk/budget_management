@@ -9,13 +9,13 @@ export class Permissions {
 	@PrimaryGeneratedColumn()
 		id: number;
 
-	@Column({nullable: false})
+	@Column('varchar', {nullable: false})
 		name: string;
 	
-	@Column({nullable: false})
+	@Column('varchar', {nullable: false})
 		clean_name: string;
 	
-	@Column({name: 'is_removed', default: false, nullable: false})
+	@Column('boolean', {name: 'is_removed', default: false, nullable: false})
 		is_removed: boolean;
 
 	@OneToMany(() => RolePermissions, rolePermissions => rolePermissions.permission)

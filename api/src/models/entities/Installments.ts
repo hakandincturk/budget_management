@@ -18,25 +18,25 @@ export class Installments {
 	@Column({type: 'float', nullable: false})
 		total_amount: number;
 
-  @Column({nullable: false}) 
+  @Column('int', {nullable: false}) 
   	installment: number;
 
-  @Column({nullable: false}) 
+  @Column('int', {nullable: false}) 
   	total_installment_count: number;
 
-  @Column({nullable: false}) 
+  @Column('int', {nullable: false}) 
   	month: number;
 
-  @Column({nullable: false}) 
+  @Column('int', {nullable: false}) 
   	year: number;
 	
-	@Column({name: 'is_paid', default: false, nullable: false}) 
+	@Column('boolean', {name: 'is_paid', default: false, nullable: false}) 
   	is_paid: boolean;
 
-	@Column({nullable: true}) 
+	@Column('date', {nullable: true}) 
 		paid_date: Date;
 	
-	@Column({name: 'is_removed', default: false, nullable: false})
+	@Column('boolean', {name: 'is_removed', default: false, nullable: false})
 		is_removed: boolean;
 
 	@CreateDateColumn({default: new Date()}) 

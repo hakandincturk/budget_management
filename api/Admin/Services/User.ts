@@ -23,7 +23,13 @@ class User {
 	static async create(body: IUserCreateBody, language: string){
 		try {
 			const res = await dataSource.transaction(async (transactionManager) => {
-				const isUserExist = await transactionManager.findOne(Users, { where: { email: body.email } });
+				const isUserExist = await transactionManager.findOne(Users, { 
+					where: { 
+						email: body.email,
+						is_removed: false 
+					}
+				});
+				
 				if (isUserExist) {
 					return { type: false, message: 'User already exist' };
 				}	

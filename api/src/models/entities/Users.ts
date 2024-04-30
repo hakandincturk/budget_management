@@ -11,19 +11,19 @@ export class Users {
 	@PrimaryGeneratedColumn({type: 'bigint'}) 
 		id: number; 
 
-	@Column() 
+	@Column('varchar',)
 	public name: string; 
 
-	@Column() 
+	@Column('varchar',)
 	public surname: string; 
 
-	@Column() 
+	@Column('varchar',) 
 		email: string;
 		
-	@Column() 
+	@Column('varchar',) 
 		password: string;
 
-	@Column({nullable: true}) 
+	@Column('varchar', {nullable: true}) 
 		phone_number: string;
 
 	@Column('boolean', {nullable: false, default: false}) 
@@ -45,7 +45,7 @@ export class Users {
 	@OneToMany(() => UserCards, userCards => userCards.user, {cascade: true})
 		userCards: UserCards[];
 
-	@VirtualColumn({
+	@VirtualColumn('varchar', {
 		query(alias) {
 			return `CONCAT(${alias}.name, ' ', ${alias}.surname)`;
 		}

@@ -8,22 +8,22 @@ export class UserCards {
 	@PrimaryGeneratedColumn()
 		id: number;
 
-	@Column({nullable: false})
+	@Column('varchar', {nullable: false})
 		name: string;
 	
-	@Column()
+	@Column('varchar')
 		number: string;
 
-  @Column() 
+  @Column('varchar',) 
   	expire_date: string;
 
-  @Column() 
+  @Column('int',) 
   	ccv: number;
 	
-	@Column({nullable: false, default: 0}) 
+	@Column('int', {nullable: false, default: 0}) 
   	limit: number;
 	
-	@Column({name: 'is_removed', default: false, nullable: false})
+	@Column('boolean', {name: 'is_removed', default: false, nullable: false})
 		is_removed: boolean;
 
 	@ManyToOne(() => Users, user => user.id)

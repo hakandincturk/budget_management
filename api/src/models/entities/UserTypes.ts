@@ -6,13 +6,13 @@ export class UserTypes {
 	@PrimaryGeneratedColumn()
 		id: number;
   
-  @Column({nullable: false})
+  @Column('varchar', {nullable: false})
   	name: string;
 
-	@Column({default: 1})
+	@Column('int', {default: 1})
   	type: number;
 
-	@Column({name: 'is_removed', default: false})
+	@Column('boolean', {name: 'is_removed', default: false})
 		is_removed: boolean;
 
 	@CreateDateColumn({default: new Date()}) 

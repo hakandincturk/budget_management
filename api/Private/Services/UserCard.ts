@@ -29,6 +29,8 @@ class UserCard {
 				.andWhere('userCards.is_removed = :isRemoved', {isRemoved: false})
 				.getOne();
 
+			// console.log('allUserCards -->', allUserCards);
+
 			return { type: true, message: Lang[language].Users.info.get, data: allUserCards };
 		}
 		catch (error) {

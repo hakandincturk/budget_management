@@ -65,9 +65,9 @@ class Installment {
 				console.log(totalPaidAmount, nextMonthWillPay, currentMonthPaid);
         
 				return {type: true, message: Lang[language].Installments.info.gets, data: {
-					totalPaidAmount: totalPaidAmount || 1,
-					nextMonthWillPay: nextMonthWillPay || 2,
-					currentMonthPaid: currentMonthPaid || 3
+					totalPaidAmount: totalPaidAmount || 0,
+					nextMonthWillPay: nextMonthWillPay || 0,
+					currentMonthPaid: currentMonthPaid || 0
 				}};
 			});
 			return res;
