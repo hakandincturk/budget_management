@@ -1,13 +1,11 @@
-/* eslint-disable quotes */
 /* eslint-disable max-len */
-import 'dotenv';
 import { Users } from '../../src/models/entities/Users.js';
 import { UserCards } from '../../src/models/entities/UserCards.js';
 
 import { dataSource } from '../../app.js';
 
 import { Lang } from '../../src/config/enums.js';
-import { IUserCardCreateBody } from '../../src/models/interfaces/UserCards.js';
+import { IUserCardCreateBody } from '../../src/models/interfaces/IUserCards.js';
 
 class UserCard {
 
@@ -16,10 +14,22 @@ class UserCard {
 			const userRepository = dataSource.getRepository(Users);
 			const allUserCards = await userRepository.createQueryBuilder('user')
 				.innerJoin('user.userCards', 'userCards')
-				.select([ 'user.id', 'user.fullName', 'userCards.id', 'userCards.name', 'userCards.number', 'userCards.expire_date', 'userCards.ccv', 'userCards.limit', 'userCards.is_removed' ])
+				.select([ 
+					'user.id',
+					'user.fullName',
+					'userCards.id',
+					'userCards.name',
+					'userCards.number',
+					'userCards.expire_date',
+					'userCards.ccv',
+					'userCards.limit',
+					'userCards.is_removed'
+				])
 				.where('user.id = :userId', {userId})
 				.andWhere('userCards.is_removed = :isRemoved', {isRemoved: false})
 				.getOne();
+
+			// console.log('allUserCards -->', allUserCards);
 
 			return { type: true, message: Lang[language].Users.info.get, data: allUserCards };
 		}
@@ -48,7 +58,7 @@ class UserCard {
 				if (!createUserCard) {
 					return { type: false, message: Lang[language].UserCards.error.create};					
 				}
-				return { type: true, message: Lang[language].UserCards.success.get};
+				return { type: true, message: Lang[language].UserCards.success.create};
 			});
 			return res;
 		}

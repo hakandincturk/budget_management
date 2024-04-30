@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import bodyParser from 'body-parser';
 import dotEnv from 'dotenv';
+import cors from 'cors';
 import express, { Application, NextFunction, Request, Response, response } from 'express';
 import { pagination } from 'typeorm-pagination';
 
@@ -18,7 +19,15 @@ import adminRoutes from './Admin/index.js';
 const PORT: number = Number(process.env.PORT) || 7000;
 const app: Application = express();
 
+const allowedOrigins = [ 'http://127.0.0.1:3000' ];
+
+const options: cors.CorsOptions = {
+	origin: allowedOrigins
+};
+
 dotEnv.config();
+app.use(cors(options)); // for cors
+app.use(express.json()); // for cors
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(pagination);

@@ -52,6 +52,43 @@ export default {
 			alreadyExist: 'Card already exist.'
 		}
 	},
+	Outgoings: {
+		success: {
+			create: 'Outgoing money created successfully.',
+			update: 'Outgoing money updated successfully.',
+			delete: 'Outgoing money deleted successfully.'
+		},
+		error: {
+			create: 'Outgoing money could not be created.',
+			update: 'Outgoing money could not be updated.',
+			delete: 'Outgoing money could not be deleted.'
+		},
+		info: {
+			notFound: 'Outgoing money not found.',
+			get: 'Outgoing money retrieved successfully.',
+			gets: 'Outgoing moneys retrieved successfully.',
+			alreadyExist: 'Outgoing money already exist.'
+		}
+	},
+	Installments: {
+		success: {
+			create: 'Installment created successfully.',
+			update: 'Installment updated successfully.',
+			delete: 'Installment deleted successfully.',
+			paid: 'Installment paid successfully.'
+		},
+		error: {
+			create: 'Installment could not be created.',
+			update: 'Installment could not be updated.',
+			delete: 'Installment could not be deleted.'
+		},
+		info: {
+			notFound: 'Installment not found.',
+			get: 'Installment retrieved successfully.',
+			gets: 'Installments retrieved successfully.',
+			alreadyExist: 'Installment already exist.'
+		}
+	},
 	Joi: {
 		'any.required': '{{#label}} is required',
 		'array.base': '{{#label}} must be a array',

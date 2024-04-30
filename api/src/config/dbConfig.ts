@@ -17,8 +17,8 @@ const devSource: DataSource = new DataSource  ({
 	database: 'budget_management_dev',
 	synchronize: true,
 	logging: false,
-	entities: [ `${__dirname}/../models/entities/*.ts` ],
-	migrations: [ `${__dirname}/../models/migrations/*.ts` ]
+	entities: [ `${__dirname}/../models/entities/*.{js,ts}` ],
+	migrations: [ `${__dirname}/../models/migrations/*.{js,ts}` ]
 	// subscribers: [ `${__dirname}/../models/subscribers/*.ts` ]
 });
 

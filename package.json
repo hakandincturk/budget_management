@@ -7,12 +7,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "env-cmd -f ./env/dev.env nodemon --files ./api/app.ts",
-    "seeder": "ts-node ./api/src/models/seeders/index.ts --timeout 10 --exit"
+    "startt": "tsx watch api/app.ts",
+    "seeder": "ts-node --files ./api/src/models/seeders/index.ts --timeout 10 --exit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/md5": "^2.3.2",
     "@types/node": "^18.15.10",
@@ -20,7 +22,8 @@
     "@typescript-eslint/parser": "^5.57.0",
     "eslint": "^8.36.0",
     "esm": "^3.2.25",
-    "ts-node": "^10.9.1",
+    "nodemon": "^3.1.0",
+    "tsx": "^4.7.3",
     "typescript": "^5.0.2"
   },
   "dependencies": {
@@ -32,7 +35,7 @@
     "express-jsdoc-swagger": "^1.8.0",
     "jsonwebtoken": "^9.0.0",
     "md5": "^2.3.0",
-    "nodemon": "^2.0.22",
+    "moment": "^2.29.4",
     "pg": "^8.10.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.12",

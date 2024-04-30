@@ -1,8 +1,9 @@
 /* eslint-disable max-len */
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany, VirtualColumn} from 'typeorm'; 
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany, VirtualColumn, JoinColumn, ManyToOne} from 'typeorm'; 
 
 import { UserRoles } from './UserRoles.js';
 import { UserCards } from './UserCards.js';
+import { UserTypes } from './UserTypes.js';
 
 @Entity({name: 'Users'}) 
 export class Users {   
@@ -10,19 +11,19 @@ export class Users {
 	@PrimaryGeneratedColumn({type: 'bigint'}) 
 		id: number; 
 
-	@Column() 
+	@Column('varchar',)
 	public name: string; 
 
-	@Column() 
+	@Column('varchar',)
 	public surname: string; 
 
-	@Column() 
+	@Column('varchar',) 
 		email: string;
 		
-	@Column() 
+	@Column('varchar',) 
 		password: string;
 
-	@Column({nullable: true}) 
+	@Column('varchar', {nullable: true}) 
 		phone_number: string;
 
 	@Column('boolean', {nullable: false, default: false}) 
@@ -34,13 +35,17 @@ export class Users {
 	@CreateDateColumn({default: new Date()})
 		updatedAt: Date;
 
+	@ManyToOne(() => UserTypes, userType => userType.id, {cascade: true})
+	@JoinColumn({name: 'user_type_id'})
+		userType: UserTypes;
+
 	@OneToMany(() => UserRoles, userRoles => userRoles.user, {cascade: true})
 		userRoles: UserRoles[];
 
 	@OneToMany(() => UserCards, userCards => userCards.user, {cascade: true})
 		userCards: UserCards[];
 
-	@VirtualColumn({
+	@VirtualColumn('varchar', {
 		query(alias) {
 			return `CONCAT(${alias}.name, ' ', ${alias}.surname)`;
 		}

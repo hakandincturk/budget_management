@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import UserCardService from '../Services/UserCard.js';
 
-import { IUserCardCreateBody } from '../../src/models/interfaces/UserCards.js';
+import { IUserCardCreateBody } from '../../src/models/interfaces/IUserCards.js';
 import { IResponseBody } from '../../src/models/interfaces/IResponseBody.js';
 
 class UserCard {
